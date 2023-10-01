@@ -1,51 +1,75 @@
 #include "processos.h"
+#include <stdio.h>
 
-#define MAX_PROCESSOS 100 // Defina o número máximo de processos suportados
+#define MAX_PROCESSOS 100
 
 Processo tabela_processos[MAX_PROCESSOS];
-int processo_em_execucao = -1; // Inicialmente nenhum processo em execução
+
+int processo_em_execucao = -1;
 
 void init_processos() {
-    // Inicialize a tabela de processos e outras variáveis globais
-    // ...
+    for (int i = 0; i < MAX_PROCESSOS; i++) {
+        tabela_processos[i].pid = -1;
+        tabela_processos[i].estado = 0;
+        // Inicialize outras informações do processo, se necessário
+    }
 }
 
 void salvar_estado(Processo *processo) {
-    // Salve o estado do processador na entrada correspondente à estrutura do processo
-    // ...
+    // Implemente a lógica para salvar o estado do processador
+    printf("Salvando estado do processador para o processo com PID %d\n", processo->pid);
 }
 
 void recuperar_estado(Processo *processo) {
-    // Recupere o estado do processador a partir da tabela para o processo em execução
-    // ...
+    // Implemente a lógica para recuperar o estado do processador
+    printf("Recuperando estado do processador para o processo com PID %d\n", processo->pid);
 }
 
 void escalonador() {
-    // Implemente o escalonador simples aqui
-    // ...
+    // Implemente um escalonador simples, por exemplo, selecionando o próximo processo pronto
+    for (int i = 0; i < MAX_PROCESSOS; i++) {
+        if (tabela_processos[i].estado == 1) {
+            processo_em_execucao = i;
+            printf("Processo com PID %d está em execução\n", tabela_processos[i].pid);
+            break;
+        }
+    }
 }
 
 void tratador_interrupcao() {
-    // Salve o estado do processador
-    // Execute o tratador correspondente à interrupção
-    // Execute uma função para tratar pendências
-    // Execute o escalonador
-    // Recupere o estado do processador
-    // ...
+    if (processo_em_execucao != -1) {
+        salvar_estado(&tabela_processos[processo_em_execucao]);
+        // Execute o tratador correspondente à interrupção
+        // Execute uma função para tratar pendências
+        escalonador();
+        recuperar_estado(&tabela_processos[processo_em_execucao]);
+    }
 }
 
 int criar_processo() {
-    // Implemente a chamada para criar um novo processo
-    // ...
-    return novo_pid; // Substitua 'novo_pid' pelo PID do novo processo
+    for (int i = 0; i < MAX_PROCESSOS; i++) {
+        if (tabela_processos[i].pid == -1) {
+            tabela_processos[i].pid = i; // Atribuir um PID único
+            tabela_processos[i].estado = 1; // Definir o estado como pronto
+            // Inicialize outras informações do processo, se necessário
+            return i;
+        }
+    }
+    return -1; // Retornar -1 se não houver espaço para mais processos
 }
 
 void encerrar_processo(int pid) {
-    // Implemente a chamada para encerrar um processo
-    // ...
+    for (int i = 0; i < MAX_PROCESSOS; i++) {
+        if (tabela_processos[i].pid == pid) {
+            tabela_processos[i].pid = -1;
+            tabela_processos[i].estado = 0;
+            // Limpar outras informações do processo, se necessário
+            break;
+        }
+    }
 }
 
 void realizar_entrada_saida(int pid) {
-    // Altere as chamadas de E/S para usar um terminal diferente dependendo do PID do processo
-    // ...
+    // Implemente a lógica para realizar E/S em um terminal diferente com base no PID
+    printf("Realizando E/S para o processo com PID %d\n", pid);
 }
