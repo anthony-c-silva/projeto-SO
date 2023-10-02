@@ -36,17 +36,17 @@ int escolher_proximo() {
 }
 
 void init_processos() {
-    // Inicialize a tabela de processos e outras variáveis globais
+    // Inicializar a tabela de processos e outras variáveis globais
     // ...
 }
 
 void salvar_estado(Processo *processo) {
-    // Implemente a lógica para salvar o estado do processador
+    // Implementar a lógica para salvar o estado do processador
     printf("Salvando estado do processador para o processo com PID %d\n", processo->pid);
 }
 
 void recuperar_estado(Processo *processo) {
-    // Implemente a lógica para recuperar o estado do processador
+    // Implementar a lógica para recuperar o estado do processador
     printf("Recuperando estado do processador para o processo com PID %d\n", processo->pid);
 }
 
@@ -68,8 +68,8 @@ void escalonador() {
 void tratador_interrupcao() {
     if (processo_em_execucao != -1) {
         salvar_estado(&tabela_processos[processo_em_execucao]);
-        // Execute o tratador correspondente à interrupção
-        // Execute uma função para tratar pendências
+        // Executar o tratador correspondente à interrupção
+        // Executar uma função para tratar pendências
         escalonador();
         recuperar_estado(&tabela_processos[processo_em_execucao]);
     }
@@ -80,7 +80,7 @@ int criar_processo() {
         if (tabela_processos[i].pid == -1) {
             tabela_processos[i].pid = i; // Atribuir um PID único
             tabela_processos[i].estado = 1; // Definir o estado como pronto
-            // Inicialize outras informações do processo, se necessário
+            // Inicializar outras informações do processo, se necessário
             return i;
         }
     }
@@ -99,6 +99,6 @@ void encerrar_processo(int pid) {
 }
 
 void realizar_entrada_saida(int pid) {
-    // Implemente a lógica para realizar E/S em um terminal diferente com base no PID
+    // Implementar a lógica para realizar E/S em um terminal diferente com base no PID
     printf("Realizando E/S para o processo com PID %d\n", pid);
 }
